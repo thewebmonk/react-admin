@@ -1,0 +1,40 @@
+.container {
+  background-color: #fff;
+  height: 70px;
+  padding: 0 20px;
+  width: 100%;
+  box-shadow: 1px 1px 5px rgba($color: #000000, $alpha: 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.greetingContainer {
+  display: flex;
+  align-items: center;
+}
+.greeting {
+  margin-left: 20px;
+  font-weight: 400;
+  font-size: var(--medium-font-size);
+  span {
+    font-weight: 600;
+  }
+}
+
+.avatar {
+  background-color: #7397fa;
+  font-size: var(--primary-font-size);
+  cursor: pointer;
+  .ant-popover-arrow {
+    display: none !important;
+  }
+}
+
+.popover .ant-popover-arrow {
+  display: none !important;
+}
+@media only screen and (max-width: 768px) {
+  .greeting {
+    font-size: var(--medium-font-size);
+  }
+}

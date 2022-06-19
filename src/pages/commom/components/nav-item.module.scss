@@ -1,0 +1,20 @@
+.navItem {
+  display: flex;
+  padding: 10px 20px;
+  border-radius: 5px;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+  span {
+    margin-left: 20px;
+    color: #fff;
+    font-size: var(--primary-font-size);
+    transform: translateY(1px);
+  }
+  &.active {
+    background-color: rgba($color: #fff, $alpha: 0.2);
+  }
+}
+.navItem[aria-current='page'] {
+  background-color: rgba($color: #fff, $alpha: 0.2);
+}

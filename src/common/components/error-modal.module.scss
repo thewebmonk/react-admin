@@ -1,0 +1,16 @@
+.modalContainer {
+  :global {
+    .ant-modal .ant-modal-content {
+      border-radius: 5px;
+    }
+    .ant-modal .ant-modal-content .ant-modal-header .ant-modal-title {
+      font-size: var(--large-font-size);
+    }
+    .ant-modal .ant-modal-content .ant-modal-body {
+      font-size: var(--normal-font-size);
+    }
+    .ant-modal .ant-modal-content .ant-modal-footer {
+      border: none;
+    }
+  }
+}

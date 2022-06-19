@@ -1,0 +1,15 @@
+.profileForm {
+  max-width: 500px;
+  :global {
+    .ant-form-item {
+      display: block;
+      .ant-form-item-label {
+        text-align: left;
+        margin-bottom: 3px;
+      }
+    }
+  }
+}
+.image {
+  height: 150px;
+}

@@ -1,25 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import './common/scss/global.scss';
+import LoginPage from './pages/login';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import AppLayout from './AppLayout';
+import { useIsAuthentciated } from './hooks';
+import ForgotPassword from './pages/forgot-password';
+import ResetPassword from './pages/forgot-password/reset-pssword';
+import AppLoader from './common/components/app-loader';
+import ErrorModal from './common/components/error-modal';
+// import PrivateRoute from './route/PrivateRoute';
 
 function App() {
+  const isAuthentciated = useIsAuthentciated();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <AppLoader />
+      <ErrorModal />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={!isAuthentciated ? <LoginPage /> : <Navigate to="/" replace />} />
+          <Route path="/forgotPassword" element={!isAuthentciated ? <ForgotPassword /> : <Navigate to="/" replace />} />
+          <Route
+            path="/resetPassword/:token"
+            element={!isAuthentciated ? <ResetPassword /> : <Navigate to="/" replace />}
+          />
+          <Route path="*" element={isAuthentciated ? <AppLayout /> : <Navigate to="/login" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
