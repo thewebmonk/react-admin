@@ -58,7 +58,10 @@ body {
 .fontmedium {
   font-size: var(--medium-font-size);
 }
-
+.is-primary-btn {
+  background-color: var(--primary-accent-color);
+  border-color: var(--primary-accent-color);
+}
 .cursor-pointer {
   cursor: pointer;
 }

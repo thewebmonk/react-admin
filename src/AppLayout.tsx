@@ -1,8 +1,8 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { getFirstApplicablePage } from './common/utils';
-import { NavContext, useIsAdmin, usePermission } from './hooks';
+import { NavContext, useIsAdmin, useIsMobile, usePermission } from './hooks';
 import Header from './pages/commom/components/header';
 import SideBar from './pages/commom/components/side-bar';
 import Dashboard from './pages/dashboard';
@@ -15,7 +15,8 @@ import Videos from './pages/videos';
 
 const AppLayout = () => {
   const dispatch = useDispatch<Dispatch>();
-  const [sideBarOpen, setSideBarOpen] = useState(true);
+  const isMobile = useIsMobile();
+  const [sideBarOpen, setSideBarOpen] = useState(false);
   const [goBackRoute, setGoBackRoute] = useState('');
   const [intialDataFetched, setIntialDataFetched] = useState(false);
   const permission = usePermission();
@@ -27,10 +28,13 @@ const AppLayout = () => {
     };
     dispatch(getLoggedInUserAndPermission(onSuccess));
   }, []);
+  useEffect(() => {
+    setSideBarOpen(!isMobile);
+  }, [isMobile]);
   return intialDataFetched && firstApplicablePage ? (
     <NavContext.Provider value={{ goBackRoute, setGoBackRoute }}>
       <div className="ash-admin">
-        <SideBar {...{ setSideBarOpen, sideBarOpen, permission, isAdmin }} />
+        <SideBar {...{ setSideBarOpen, sideBarOpen, permission, isAdmin, isMobile }} />
         <div className="main">
           <Header {...{ setSideBarOpen, sideBarOpen }} />
           <div className="content">

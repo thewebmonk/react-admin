@@ -1,20 +1,23 @@
 import { ActionReducerMapBuilder, createReducer } from '@reduxjs/toolkit';
-import { setErrorModal } from '../actions';
+import { setErrorModal, storeSetting, storeSettings } from '../actions';
+import { PageUIStateType } from '../types/index.types';
 
-export type PageUIStateType = {
-  errorModal: {
-    message: string | null;
-  };
-};
 const initialState: PageUIStateType = {
   errorModal: {
     message: null
-  }
+  },
+  settings: null
 };
 
 const pageUIStateReducer = createReducer(initialState, (builder: ActionReducerMapBuilder<PageUIStateType>) => {
   builder.addCase(setErrorModal, (state: typeof initialState, action: ReturnType<typeof setErrorModal>) => {
     state.errorModal.message = action.payload;
+  });
+  builder.addCase(storeSettings, (state: typeof initialState, action: ReturnType<typeof storeSettings>) => {
+    state.settings = action.payload;
+  });
+  builder.addCase(storeSetting, (state: typeof initialState, action: ReturnType<typeof storeSetting>) => {
+    state.settings = { ...state.settings, [action.payload.key]: action.payload.value };
   });
 });
 

@@ -6,17 +6,45 @@ import { ReactComponent as Plus } from '../../../common/svg/plus.svg';
 import styles from '../videos.module.scss';
 import { Video } from '../videos.type';
 import { useDispatch } from 'react-redux';
-import { Dispatch } from '../../../types/index.types';
+import { Dispatch, RootState } from '../../../types/index.types';
 import { deleteVideo, getAllVideos } from '../actions/async-action';
-import VideoCard from './video';
+import VideoCard, { AdditionalAction, VideoTag } from './video';
 import NoData from '../../commom/components/no-data-available/no-data';
-import { useIsMobile } from '../../../hooks';
+import { useIsMobile, useUdpateSettings } from '../../../hooks';
+import { useSelector } from 'react-redux';
+import { settingsKeys } from '../../../common/utils/constants';
 
 const VideosList = () => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [search, setSearch] = useState<string>('');
+  const settings = useSelector((state: RootState) => state.pageUIState.settings);
+  const { about_videoId, course1_videoId } = settings || {};
+  const updateSettings = useUdpateSettings();
+  const getTag = (videoId: any) => {
+    const tags: VideoTag[] = [];
+    if (videoId === about_videoId) {
+      tags.push({ text: 'About Video', color: 'blue' });
+    }
+    if (videoId === course1_videoId) {
+      tags.push({ text: 'Course Video', color: 'cyan' });
+    }
+    return tags;
+  };
   const isMobile = useIsMobile();
   const dispatch = useDispatch<Dispatch>();
+  const additionalAction = useMemo<AdditionalAction[]>(
+    () => [
+      {
+        text: 'Set as about video',
+        onClick: (video: Video) => updateSettings(settingsKeys.ABOUT_VIDEOID, video.videoId)
+      },
+      {
+        text: 'Set as course video',
+        onClick: (video: Video) => updateSettings(settingsKeys.COURSE1_VIDEOID, video.videoId)
+      }
+    ],
+    []
+  );
   const fetchVideos = async () => {
     const data = await dispatch(getAllVideos());
     data && setVideos(data);
@@ -52,9 +80,6 @@ const VideosList = () => {
           <List
             className="mt-3"
             pagination={{
-              onChange: (page) => {
-                console.log(page);
-              },
               pageSize: 18
             }}
             grid={{ gutter: 16, column: isMobile ? 2 : 6 }}
@@ -65,7 +90,7 @@ const VideosList = () => {
             }
             renderItem={(video) => (
               <List.Item>
-                <VideoCard key={video.id} {...{ video, handleDelete }} />
+                <VideoCard key={video.id} {...{ video, handleDelete, tags: getTag(video.videoId), additionalAction }} />
               </List.Item>
             )}
           />

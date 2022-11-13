@@ -1,4 +1,4 @@
-import { Card } from 'antd';
+import { Card, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from '../../types/index.types';
@@ -13,17 +13,30 @@ import NoData from '../commom/components/no-data-available/no-data';
 
 const Dashboard = () => {
   const [data, setData] = useState<GraphDataAPIResponse>([]);
+  const [showdataUpto, setShowdataUpto] = useState<number>(30);
   const dispatch = useDispatch<Dispatch>();
   useEffect(() => {
-    dispatch(getAnalyticsGraphData(entities.SUBSCRIBERS, 100)).then((res: GraphDataAPIResponse | null) => {
+    dispatch(getAnalyticsGraphData(entities.SUBSCRIBERS, showdataUpto)).then((res: GraphDataAPIResponse | null) => {
       res && setData(res);
     });
-  }, []);
+  }, [showdataUpto]);
   const config = getGraphConfig(data);
   return (
     <div>
       <Card>
-        <Heading title="Email Subscribers" type="small" className="mb-5" />
+        <div className="is-flex is-justify-content-space-between is-align-items-center">
+          <Heading title="Email Subscribers" type="small" className="mb-5" />
+          <Select
+            className={styles.selectField}
+            value={showdataUpto}
+            onChange={(value: number) => setShowdataUpto(value)}
+          >
+            <Select.Option value={100}>Last 100 days</Select.Option>
+            <Select.Option value={50}>Last 50 days</Select.Option>
+            <Select.Option value={30}>Last 1 Month</Select.Option>
+            <Select.Option value={7}>Last 1 Week</Select.Option>
+          </Select>
+        </div>
         <div className="columns">
           <div className="column is-12">
             {data.length ? <Line {...config} /> : <NoData height={150} text="Not enough data available" />}

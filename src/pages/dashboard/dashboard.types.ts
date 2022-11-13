@@ -1,6 +1,6 @@
 export type GraphData = {
-  date: string;
-  count: number;
+  Date: string;
+  Count: number;
 };
 
 export type GraphDataAPIResponse = GraphData[];

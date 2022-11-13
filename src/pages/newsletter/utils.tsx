@@ -11,6 +11,11 @@ export const getNewsLetterTableColumn = () => {
       dataIndex: 'id'
     },
     {
+      title: 'Name',
+      key: 'name',
+      dataIndex: 'name'
+    },
+    {
       title: 'Email',
       key: 'email',
       dataIndex: 'email',
@@ -21,6 +26,7 @@ export const getNewsLetterTableColumn = () => {
       key: 'created_at',
       dataIndex: 'created_at',
       render: (created_at: string) => moment(created_at).format('DD MMM YYYY, hh:mm A'),
+      defaultSortOrder: 'ascend',
       sorter: (a: NewsLetterAPI, b: NewsLetterAPI) => (moment(a.created_at).isAfter(moment(b.created_at)) ? -1 : 1)
     }
   ];

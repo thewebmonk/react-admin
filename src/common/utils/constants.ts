@@ -14,3 +14,8 @@ export const entities: entities = {
 
 export const mobileWidth = 768;
 export const brandName = 'Dostcast';
+
+export const settingsKeys = {
+  ABOUT_VIDEOID: 'about_videoId',
+  COURSE1_VIDEOID: 'course1_videoId'
+};

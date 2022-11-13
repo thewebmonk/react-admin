@@ -1,10 +1,20 @@
-.tableContainer {
-}
 .video {
   background-color: #fff;
   padding: 10px;
   border-radius: 5px;
   box-shadow: 1px 1px 5px rgba($color: #000000, $alpha: 0.1);
+  position: relative;
+  .tag {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    :global {
+      .ant-tag {
+        margin: 0;
+      }
+    }
+  }
   .thumb {
     height: 120px;
     img {
@@ -35,7 +45,35 @@
     }
   }
 }
-
+.moreActionContainer {
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  background-color: #fff;
+  padding: 3px;
+  .moreAction {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+  }
+  .moreAction:last-child {
+    border: none;
+  }
+  .moreAction:hover {
+    background-color: var(--primary-theme-color);
+    color: #fff;
+  }
+}
+.popupClass {
+  :global {
+    .ant-popover-arrow {
+      display: none;
+    }
+    .ant-popover-inner-content {
+      padding: 0;
+    }
+  }
+}
 @media only screen and (max-width: 768px) {
   .tableContainer {
     grid-template-columns: repeat(2, 1fr);

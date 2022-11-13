@@ -7,6 +7,7 @@ import { Permission } from '../pages/login/login.types';
 import { Dispatch, RootState } from '../types/index.types';
 import debounce from 'debounce';
 import { isWidthMobile } from '../common/utils';
+import { updateSettings } from '../actions/async-action';
 
 export const NavContext = createContext<{
   goBackRoute: string;
@@ -64,4 +65,11 @@ export const useIsMobile = () => {
 export const useIsAdmin = () => {
   const user = useSelector((state: RootState) => state.auth.user);
   return user && user.role && [roles.ADMIN, roles.ROOT].includes(user.role) ? true : false;
+};
+
+export const useUdpateSettings = () => {
+  const dispatch = useDispatch<Dispatch>();
+  return (key: string, value: string | null) => {
+    dispatch(updateSettings(key, value));
+  };
 };

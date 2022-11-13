@@ -1,8 +1,8 @@
 export const getGraphConfig = (data: any[]) => {
   return {
     data,
-    xField: 'date',
-    yField: 'count',
+    xField: 'Date',
+    yField: 'Count',
     label: {},
     point: {
       size: 5,
